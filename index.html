@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>adivinhação</title>
+<style>
+  /* Estilos para centralizar o conteúdo na página */
+  body, html {
+    background-color: white;
+    color: black;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    padding-top: 50px; /* Espaço para a imagem */
+  }
+  
+  #numero {
+    width: 300px;
+    background-color: white;
+    border: 1px solid #000;
+    padding: 10px;
+  }
+
+  /* Estilos para o botão e campo de entrada */
+  #resultado {
+    border: 1px solid #000;
+    padding: 20px;
+    display: block;
+    margin: 20px 0;
+  }
+
+  button {
+    margin: 20px;
+    padding: 7px 100px;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: blue;
+    color: white;
+    border: 0px;
+  }
+
+  /* Estilos para a barra de progresso e o texto de carregamento */
+  #barraProgressoContainer {
+    width: 100%;
+    background-color: #ddd;
+    margin-top: 10px; /* Espaço entre a mensagem e a barra de progresso */
+  }
+  
+  #barraProgresso {
+    width: 0%;
+    height: 30px;
+    background-color: green;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+  }
+
+  #textoCarregando {
+    text-align: center;
+    margin-top: 10px;
+    display: none; /* Inicialmente escondido */
+  }
+</style>
+<script>
+function mostrarNumero() {
+  // Obtém o valor do campo de entrada
+  var numero = document.getElementById('numero').value;
+  var barra = document.getElementById('barraProgresso');
+  var textoCarregando = document.getElementById('textoCarregando');
+  var largura = 0;
+
+  // Mostra o texto de carregamento
+  textoCarregando.style.display = 'block';
+  textoCarregando.innerHTML = 'Carregando...';
+
+  // Inicia o preenchimento da barra de progresso
+  var intervalo = setInterval(function() {
+    if (largura >= 100) {
+      clearInterval(intervalo);
+      textoCarregando.innerHTML = 'Você pensou em: '; // Atualiza o texto de carregamento para a mensagem final
+      document.getElementById('resultado').value = numero;
+      document.getElementById('resultado').style.display = 'block'; // Mostra o campo de resultado
+    } else {
+      largura++;
+      barra.style.width = largura + '%';
+      barra.innerHTML = largura + '%';
+    }
+  }, 50); // Atualiza a barra a cada 50ms
+}
+</script>
+</head>
+<body>
+
+<!-- Espaço reservado para a imagem -->
+<img src="nerd.gif" alt="nerd" style="max-width: 100%; height: auto;">
+
+<h2>Eu vou adivinhar o número que você está pensando</h2>
+<input type="text" id="numero" placeholder="Digite o número que você pensou">
+<button onclick="mostrarNumero()">Adivinhar</button>
+
+<p id="mensagem"></p> <!-- Mensagem de carregamento acima do campo de resultado -->
+
+<!-- Barra de progresso -->
+<div id="barraProgressoContainer">
+  <div id="barraProgresso">0%</div>
+</div>
+
+<!-- Texto de carregamento que se transforma na mensagem final -->
+<div id="textoCarregando"></div>
+
+<!-- Campo de texto visível para exibir o resultado -->
+<input type="text" id="resultado" placeholder="" disabled style="border: 1px solid #000; padding: 20px; display: none;">
+
+</body>
+</html>
